@@ -142,6 +142,9 @@
         pre.title = '[CodeSnap] ' + e.message;
         (file.callback.error) && file.callback.error(e, file);
       }
+      return {
+        wrap: wrap, pre: pre, code: code
+      };
     }
 
     // load :: Object -> Closure -> XMLHttpRequest
@@ -218,8 +221,8 @@
         load_sorce(make_source_url(v), function(res){
           var file = info(v);
           var rv = C.events.before_load.apply(self, [file, res]);
-          preview(v, res);
-          C.events.loaded.apply(self, [file, res, rv]);
+          var els = preview(v, res);
+          C.events.loaded.apply(self, [file, res, rv, els]);
         });
       });
     }
