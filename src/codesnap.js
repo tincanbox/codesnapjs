@@ -20,6 +20,8 @@
 
   function CodeSnap(O){
 
+    var self = this;
+
     this.config = { // Defaults
 
       // Prefix for element classes.
@@ -97,7 +99,7 @@
         anc.setAttribute('href', '#' + C.prefix + file.name);
         anc.setAttribute('class', C.prefix + 'index-anchor');
         anc.innerHTML = file.name;
-        C.events.indexed(ind, anc, file);
+        C.events.indexed.apply(self, [ind, anc, file]);
       }
       var title = document.createElement('div');
       title.setAttribute('id', C.prefix + file.name + '-title');
@@ -215,9 +217,9 @@
         prepare_GUI_for_file(v);
         load_sorce(make_source_url(v), function(res){
           var file = info(v);
-          var rv = C.events.before_load(file, res);
+          var rv = C.events.before_load.apply(self, [file, res]);
           preview(v, res);
-          C.events.loaded(file, res, rv);
+          C.events.loaded.apply(self, [file, res, rv]);
         });
       });
     }
